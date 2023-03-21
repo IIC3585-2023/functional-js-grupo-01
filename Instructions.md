@@ -34,14 +34,14 @@ La evaluación considera:
 
 Transformación de archivo de texto en otro archivo de texto formateado de acuerdo a diferentes especificaciones:
 
-- Cada frase debe comenzar con ​n​ espacios en blanco (después de un punto seguido)
-- Cada párrafo debe estar separado por ​n​ líneas (después de un punto aparte)
-- El ancho del texto debe ser a lo más ​n​ (sin cortar palabras)
-- Cada párrafo debe tener ​n​ espacios de sangría
-- Se ignoran los párrafos que tienen menos de ​n​ frases
-- Se ignoran los párrafos que tienen más de ​n​ frases
-- Cada frase debe aparecer en párrafo aparte
-- Solo las primeras ​n​ frases de cada párrafo
+1. Cada frase debe comenzar con ​n​ espacios en blanco (después de un punto seguido)
+2. Cada párrafo debe estar separado por ​n​ líneas (después de un punto aparte)
+3. El ancho del texto debe ser a lo más ​n​ (sin cortar palabras)
+4. Cada párrafo debe tener ​n​ espacios de sangría
+5. Se ignoran los párrafos que tienen menos de ​n​ frases
+6. Se ignoran los párrafos que tienen más de ​n​ frases
+7. Cada frase debe aparecer en párrafo aparte
+8. Solo las primeras ​n​ frases de cada párrafo
 
 Estas transformaciones deben poder combinarse o encadenarse de cualquier forma.
 
