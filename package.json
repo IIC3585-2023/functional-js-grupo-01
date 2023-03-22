@@ -1,13 +1,25 @@
 {
   "name": "functional-js-grupo-01",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node ./src/index.js"
+    "dev": "vite",
+    "build": "vite build"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {}
+  "dependencies": {
+    "fp-ts": "^2.13.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
+    "@vitejs/plugin-react": "^3.1.0",
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.21",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "tailwindcss": "^3.2.7",
+    "typescript": "^5.0.2",
+    "vite": "^4.2.1",
+    "vitest": "^0.29.7"
+  }
 }
