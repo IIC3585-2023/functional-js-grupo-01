@@ -1,3 +1,5 @@
+import { array as arr, function as fn } from "fp-ts";
+
 // Pregunta 1
 const addIndentationToPhrase = (text: string, n: number) => text.replace(/(?<=\. )/g, " ".repeat(n));
 
@@ -9,26 +11,30 @@ const addLineBreaks = (text: string, n: number) =>
     .join("\n".repeat(n + 1));
 
 // Pregunta 3
-const limitWidth = (text: string, n: number) =>
-  text
-    .split("\n")
-    .map((line) => {
-      if (line.length <= n) {
-        return line;
-      } else {
-        let words = line.split(" ");
-        let lines = words.reduce((acc, word) => {
-          if (acc.length === 0 || acc[acc.length - 1].length + word.length + 1 > n) {
-            acc.push(word);
-          } else {
-            acc[acc.length - 1] += " " + word;
-          }
-          return acc;
-        }, [] as string[]);
-        return lines.map((line) => line.padEnd(n, " ")).join("\n");
-      }
-    })
-    .join("\n");
+const reduceFlatWithStackLastItem =
+  <In, Out>(f: (last: Out[], current: In) => Out[][]) =>
+  (array: In[]): Out[][] =>
+    array.reduce((acc, value) => [...acc.slice(0, acc.length - 1), ...f(acc[acc.length - 1], value)], [[]] as Out[][]);
+
+const limitWidth = (text: string, length: number) =>
+  fn.pipe(
+    // Separar por lineas
+    text.split("\n"),
+    arr.chain(
+      fn.flow(
+        // Separar cada linea por espacio, quedamos string[]
+        (line) => line.split(" "),
+        // Separamos las lineas, quedando string[][]
+        reduceFlatWithStackLastItem((last: string[], word) =>
+          last.join(" ").length + word.length > length ? [last, [word]] : [[...last, word]]
+        ),
+        // Unimos cada linea que quedó
+        arr.map((line) => line.join(" "))
+      )
+    ),
+    // Unimos las lineas
+    (lines) => lines.join("\n")
+  );
 
 // Pregunta 4
 const addParagraphIndentation = (text: string, n: number) => text.replace(/^(?!\s*$)/gm, " ".repeat(n));
@@ -75,5 +81,5 @@ const defaultOptions = {
 };
 
 export function transform(text: string, options = defaultOptions) {
-  return text.replaceAll("hola", "adios");
+  return limitWidth(text, 25);
 }

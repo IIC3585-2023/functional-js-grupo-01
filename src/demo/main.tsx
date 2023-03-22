@@ -6,11 +6,12 @@ import { useState } from "react";
 
 export default function App() {
   const [text, setText] = useState(exampleText);
+  console.log(text);
 
   return (
     <div className="grid grid-cols-2 min-h-full">
       <textarea className="p-2" value={text} onChange={(e) => setText(e.target.value)} />
-      <textarea className="p-2" value={transform(text, {})} disabled />
+      <textarea className="p-2" value={transform(text)} disabled />
     </div>
   );
 }
