@@ -1,2 +1,5 @@
 node_modules/
 output.txt
+dist
+.DS_Store
+.vscode/
