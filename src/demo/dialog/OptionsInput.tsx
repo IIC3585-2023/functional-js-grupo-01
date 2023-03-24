@@ -5,15 +5,15 @@ type OptionsInputProps = {
   params: {
     [name: string]: number
   }
-	name: string;
-	label: string;
-	onChange: (e: SyntheticEvent, key?: string|null) => void;
+  name: string;
+  label: string;
+  onChange: (e: SyntheticEvent, key?: string|null) => void;
 };
 
 export default function OptionsInput ({ active, params, name, label, onChange }: OptionsInputProps): JSX.Element {
 	return (
-		<div className="mb-3">
-			<div className="flex items-center mb-2">
+    <div className="mb-3">
+      <div className="flex items-center mb-2">
         <input 
           type="checkbox" 
           checked={active}
@@ -33,6 +33,6 @@ export default function OptionsInput ({ active, params, name, label, onChange }:
           onChange={(e) => onChange(e, key)}
         />
       ))}
-		</div>
-	)
+    </div>
+  )
 }

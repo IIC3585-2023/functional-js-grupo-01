@@ -5,7 +5,7 @@ import { optionsType } from "../../lib/types";
 import OptionsInput from "./OptionsInput";
 
 type OptionsDialogProps = {
-	saveOptions: (options: optionsType) => void;
+  saveOptions: (options: optionsType) => void;
 };
 
 export default function OptionsDialog({ saveOptions }: OptionsDialogProps): JSX.Element {
@@ -65,16 +65,16 @@ export default function OptionsDialog({ saveOptions }: OptionsDialogProps): JSX.
                   </h3>
                 </div>
                 <div className="relative p-4 flex-auto">
-									{Object.entries(options).map(([key, value], i) => (
-										<OptionsInput
-											key={i}
-											name={key}
-											active={value.active}
+                  {Object.entries(options).map(([key, value], i) => (
+                    <OptionsInput
+                      key={i}
+                      name={key}
+                      active={value.active}
                       params={value.params}
-											label={value.name}
-											onChange={onChange}
-										/>
-									))}
+                      label={value.name}
+                      onChange={onChange}
+                    />
+                  ))}
                 </div>
                 <div className="flex items-center justify-end p-4 border-t border-solid border-slate-200 rounded-b">
                   <button
