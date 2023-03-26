@@ -78,24 +78,14 @@ export const filterParagraphs = transformFn(
 
 // Pregunta 7
 /** Cada frase debe aparecer en párrafo aparte */
-export const convertToParagraphs = transformFn({}, (text) => {
+export const convertToParagraphs = transformFn({}, (text) =>
   // Separo el texto en frases
-  const phrases = text.split(/\.(\s+)/);
-  const paragraphs = phrases.reduce((acc, phrase, index) => {
-    // Si la frase no es solo espacios en blanco
-    if (phrase.match(/\S/)) {
-      // Si no es el primer elemento del array
-      if (index > 0) {
-        // Si el último elemento del array es un string vacío, es porque la frase anterior terminaba con un punto
-        acc.push(`\n\n${phrase.trim()}.`);
-      } else {
-        acc.push(`${phrase.trim()}.`);
-      }
-    }
-    return acc;
-  }, [] as string[]);
-  return paragraphs.join("");
-});
+  text
+    .split(/\.(\s+)/)
+    .filter((phrase) => phrase.match(/\S/))
+    .map((phrase) => `${phrase.trim()}.`)
+    .join("\n\n")
+);
 
 // Pregunta 8
 /** Solo las primeras ​n​ frases de cada párrafo */
