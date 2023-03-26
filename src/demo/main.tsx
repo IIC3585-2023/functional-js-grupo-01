@@ -10,7 +10,7 @@ import OptionsDialog from "./dialog/OptionsDialog";
 import { useLocalStorage } from "../lib/useLocalStorage";
 
 export default function App(): JSX.Element {
-  const [text, setText] = useState(exampleText);
+  const [text, setText] = useLocalStorage("fs-text", exampleText);
   const [options, setOptions] = useLocalStorage<TransformationConfig[]>("fp-options", []);
 
   return (
