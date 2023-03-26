@@ -8,7 +8,7 @@ const transformFn = <P extends Params, Fn extends FilterFn<P>>(p: P, fn: Fn) => 
 /** Cada frase debe comenzar con ​n​ espacios en blanco (después de un punto seguido) */
 export const addIndentationToPhrase = transformFn(
   { n: { name: "Indentation", default: 2 } },
-  (text, { n }) => text.replace(/(?<=\. )/g, " ".repeat(n))
+  (text, { n }) => text.replace(/(\. )/g, "." + " ".repeat(n))
 );
 
 // Pregunta 2
