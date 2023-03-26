@@ -2,15 +2,29 @@ import "./style.css";
 
 import exampleText from "../example/input.txt?raw";
 
-import { useState, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { transform, defaultOptions } from "../lib";
 import { optionsType } from "../lib/types";
 
 import OptionsDialog from "./dialog/OptionsDialog";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 export default function App(): JSX.Element {
-  const [text, setText] = useState(exampleText);
-  const [options, setOptions] = useState(defaultOptions)
+  // const [text, setText] = useState(exampleText);
+  const [currentText, storedText] = useLocalStorage(exampleText);
+  const [text, setText] = useState(currentText || exampleText);
+
+  useEffect(() => {
+    storedText(text);
+  }, [text]);
+
+  // const [options, setOptions] = useState(defaultOptions);
+  const [currentOptions, storedOptions] = useLocalStorage(defaultOptions);
+  const [options, setOptions] = useState(currentOptions || defaultOptions);
+
+  useEffect(() => {
+    storedOptions(options);
+  }, [options]);
 
   /**
    * Callback function for when the options are saved.

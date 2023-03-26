@@ -1,8 +1,9 @@
-import { useState, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { defaultOptions } from "../../lib";
 import { optionsType } from "../../lib/types";
 
 import OptionsInput from "./OptionsInput";
+import useLocalStorage from "../../hooks/useLocalStorage";
 
 type OptionsDialogProps = {
   saveOptions: (options: optionsType) => void;
@@ -10,7 +11,13 @@ type OptionsDialogProps = {
 
 export default function OptionsDialog({ saveOptions }: OptionsDialogProps): JSX.Element {
   const [showModal, setShowModal] = useState(false);
-  const [options, setOptions] = useState(defaultOptions);
+  // const [options, setOptions] = useState(defaultOptions);
+  const [currentOptions, storedOptions] = useLocalStorage(defaultOptions);
+  const [options, setOptions] = useState(currentOptions || defaultOptions);
+
+  useEffect(() => {
+    storedOptions(options);
+  }, [options]);
 
   /**
    * Callback function for when an option is changed.
