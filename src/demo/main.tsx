@@ -3,17 +3,20 @@ import "./style.css";
 import { useState } from "react";
 
 import exampleText from "../example/input.txt?raw";
-import { transform, TransformationConfig } from "../lib";
+import { transform } from "../lib";
+import { TransformationConfig } from "../lib/filters";
 
 import OptionsDialog from "./dialog/OptionsDialog";
+import { useLocalStorage } from "../lib/useLocalStorage";
 
 export default function App(): JSX.Element {
   const [text, setText] = useState(exampleText);
-  const [options, setOptions] = useState<TransformationConfig[]>([]);
+  const [options, setOptions] = useLocalStorage<TransformationConfig[]>("fp-options", []);
 
   return (
     <>
       <div className="container py-4 px-10 mx-0 min-w-full flex flex-col items-center">
+        <h1 className="text-4xl font-bold text-center text-indigo-600 mb-3"> Functional JS</h1>
         <OptionsDialog options={options} setOptions={setOptions} />
       </div>
       <div className="grid grid-cols-2 min-h-full">

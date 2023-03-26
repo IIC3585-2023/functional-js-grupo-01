@@ -1,4 +1,4 @@
-import { useState, useCallback, Dispatch, SetStateAction } from "react";
+import { useState, Dispatch, SetStateAction } from "react";
 import { FilterName, filters, Params, TransformationConfig } from "../../lib/filters";
 
 interface OptionsDialogProps {
@@ -8,16 +8,6 @@ interface OptionsDialogProps {
 
 export default function OptionsDialog({ options, setOptions }: OptionsDialogProps): JSX.Element {
   const [showModal, setShowModal] = useState(false);
-
-  /**
-   * Callback function for when the options are saved.
-   * Executes the transform function with the new options.
-   * Also closes the dialog.
-   */
-  const saveCallback = useCallback(() => {
-    setOptions(options);
-    setShowModal(false);
-  }, []);
 
   return (
     <>
@@ -32,8 +22,15 @@ export default function OptionsDialog({ options, setOptions }: OptionsDialogProp
         <>
           <div className="justify-center items-center flex overflow-x-hidden fixed inset-0 z-50 outline-none focus:outline-none p-2">
             <div className=" my-6 mx-auto max-w-screen-md border-0 rounded-lg shadow-lg flex flex-col w-full bg-white outline-none focus:outline-none">
-              <div className="flex items-start justify-between p-4 border-b border-solid border-slate-200 rounded-t">
+              <div className="flex items-start justify-between items-center p-4 border-b border-solid border-slate-200 rounded-t">
                 <h3 className="text-xl font-semibold">Set options</h3>
+                <button
+                  className="background-transparent font-bold uppercase px-4 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                  type="button"
+                  onClick={() => setShowModal(false)}
+                >
+                  Close
+                </button>
               </div>
               <ol className="p-4 overflow-y-scroll shadow-inner h-96 bg-gray-50 flex-grow">
                 {options.map((transformation, index) => (
@@ -67,22 +64,6 @@ export default function OptionsDialog({ options, setOptions }: OptionsDialogProp
               </ol>
               <div className="border-t border-solid border-slate-200 flex">
                 <AddOption setOptions={setOptions} />
-                <div className="flex items-center justify-end p-4  rounded-b">
-                  <button
-                    className="background-transparent font-bold uppercase px-4 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={() => setShowModal(false)}
-                  >
-                    Close
-                  </button>
-                  <button
-                    className="bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-sm px-3 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={saveCallback}
-                  >
-                    Save Changes
-                  </button>
-                </div>
               </div>
             </div>
           </div>
@@ -98,7 +79,7 @@ function AddOption({ setOptions }: Pick<OptionsDialogProps, "setOptions">): JSX.
 
   return (
     <form
-      className="flex-grow flex items-center p-4 gap-2"
+      className="flex-grow w-full flex items-center p-4 gap-2"
       onSubmit={(e) => {
         e.preventDefault();
         setOptions((o) => [...o, { name, options: {} }]);
@@ -110,7 +91,7 @@ function AddOption({ setOptions }: Pick<OptionsDialogProps, "setOptions">): JSX.
         id="filter"
         value={name}
         onChange={(e) => setName(e.target.value as FilterName)}
-        className="bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        className="bg-white flex-grow border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
       >
         {Object.keys(filters).map((filter) => (
           <option key={filter} value={filter}>
