@@ -82,7 +82,10 @@ function AddOption({ setOptions }: Pick<OptionsDialogProps, "setOptions">): JSX.
       className="flex-grow w-full flex items-center p-4 gap-2"
       onSubmit={(e) => {
         e.preventDefault();
-        setOptions((o) => [...o, { name, options: {} }]);
+        const defaultsValues = Object.fromEntries(
+          Object.entries(filters[name].params).map(([key, { default: defaultValue }]) => [key, defaultValue])
+        );
+        setOptions((o) => [...o, { name, options: defaultsValues }]);
         setName(Object.keys(filters)[0] as keyof typeof filters);
       }}
     >
@@ -142,9 +145,9 @@ function OptionsInput({ params, name, onChange, values, up, down, remove }: Opti
               inputMode="numeric"
               type="text"
               className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mb-2"
-              value={values[key] ?? params.default}
+              value={values[key]}
               placeholder={params.name}
-              onChange={(e) => onChange({ ...values, [key]: Number(e.target.value) || 0 })}
+              onChange={(e) => onChange({ ...values, [key]: Number(e.target.value) })}
             />
           </li>
         ))}
