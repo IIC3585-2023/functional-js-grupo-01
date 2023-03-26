@@ -39,7 +39,8 @@ export default function App(): JSX.Element {
   return (
     <>
       <div className="container py-4 px-10 mx-0 min-w-full flex flex-col items-center">
-        <OptionsDialog 
+      <h1 className="text-4xl font-bold text-center text-indigo-600 mb-3"> Functional JS</h1>
+        <OptionsDialog
           saveOptions={onSave}
         />
       </div>

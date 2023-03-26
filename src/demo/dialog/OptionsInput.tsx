@@ -12,7 +12,7 @@ type OptionsInputProps = {
 
 export default function OptionsInput ({ active, params, name, label, onChange }: OptionsInputProps): JSX.Element {
 	return (
-    <div className="mb-3">
+    <div className="m-3">
       <div className="flex items-center mb-2">
         <input 
           type="checkbox" 
