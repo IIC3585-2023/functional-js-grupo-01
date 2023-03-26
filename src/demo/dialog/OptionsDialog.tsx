@@ -22,7 +22,7 @@ export default function OptionsDialog({ options, setOptions }: OptionsDialogProp
         <>
           <div className="justify-center items-center flex overflow-x-hidden fixed inset-0 z-50 outline-none focus:outline-none p-2">
             <div className=" my-6 mx-auto max-w-screen-md border-0 rounded-lg shadow-lg flex flex-col w-full bg-white outline-none focus:outline-none">
-              <div className="flex items-start justify-between items-center p-4 border-b border-solid border-slate-200 rounded-t">
+              <div className="flex justify-between items-center p-4 border-b border-solid border-slate-200 rounded-t">
                 <h3 className="text-xl font-semibold">Set options</h3>
                 <button
                   className="background-transparent font-bold uppercase px-4 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
@@ -138,11 +138,12 @@ function OptionsInput({ params, name, onChange, values, up, down, remove }: Opti
             </label>
             <input
               id={`option-${i}`}
-              type="number"
+              pattern="[0-9]*"
+              type="text"
               className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mb-2"
-              value={values[key] || params.default}
+              value={values[key] ?? params.default}
               placeholder={params.name}
-              onChange={(e) => onChange({ ...values, [key]: Number(e.target.value) })}
+              onChange={(e) => onChange({ ...values, [key]: Number(e.target.value) || 0 })}
             />
           </li>
         ))}
