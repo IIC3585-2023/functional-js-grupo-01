@@ -1,9 +1,11 @@
 import { array as arr, function as fn } from "fp-ts";
 
 // Pregunta 1
+/**  Cada frase debe comenzar con ​n​ espacios en blanco (después de un punto seguido) */
 const addIndentationToPhrase = (text: string, n: number) => text.replace(/(?<=\. )/g, " ".repeat(n));
 
 // Pregunta 2
+/** Cada párrafo debe estar separado por ​n​ líneas (después de un punto aparte) */
 const addLineBreaks = (text: string, n: number) =>
   text
     .split("\n\n")
@@ -11,10 +13,9 @@ const addLineBreaks = (text: string, n: number) =>
     .join("\n".repeat(n + 1));
 
 // Pregunta 3
-const reduceFlatWithStackLastItem =
-  <In, Out>(f: (last: Out[], current: In) => Out[][]) =>
-  (array: In[]): Out[][] =>
-    array.reduce((acc, value) => [...acc.slice(0, acc.length - 1), ...f(acc[acc.length - 1], value)], [[]] as Out[][]);
+/**  El ancho del texto debe ser a lo más ​n​ (sin cortar palabras) */
+const reduceFlatWithStackLastItem = <In, Out>(f: (last: Out[], current: In) => Out[][]) =>
+  arr.reduce<In, Out[][]>([[]], (acc, value) => [...acc.slice(0, acc.length - 1), ...f(acc[acc.length - 1], value)]);
 
 const limitWidth = (text: string, length: number) =>
   fn.pipe(
@@ -37,9 +38,14 @@ const limitWidth = (text: string, length: number) =>
   );
 
 // Pregunta 4
+/** Cada párrafo debe tener ​n​ espacios de sangría */
 const addParagraphIndentation = (text: string, n: number) => text.replace(/^(?!\s*$)/gm, " ".repeat(n));
 
 // Pregunta 5 y 6
+/**
+ * Se ignoran los párrafos que tienen menos de ​n​ frases.
+ * Se ignoran los párrafos que tienen más de ​n​ frases.
+ **/
 const filterParagraphs = (text: string, min: number, max: number) =>
   text
     .split("\n\n")
@@ -50,6 +56,7 @@ const filterParagraphs = (text: string, min: number, max: number) =>
     .join("\n\n");
 
 // Pregunta 7
+/** Cada frase debe aparecer en párrafo aparte */
 const convertToParagraphs = (text: string) => {
   // Separo el texto en frases
   const phrases = text.split(/\.(\s+)/);
@@ -64,6 +71,8 @@ const convertToParagraphs = (text: string) => {
   return paragraphs.join("");
 };
 
+// Pregunta 8
+/** Solo las primeras ​n​ frases de cada párrafo */
 const takeFirstSentences = (text: string, n: number) =>
   text
     .split("\n\n")
