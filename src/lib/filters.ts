@@ -81,10 +81,10 @@ export const filterParagraphs = transformFn(
 export const convertToParagraphs = transformFn({}, (text) =>
   // Separo el texto en frases
   text
-    .split(/\.(\s+)/)
+    .split(".\n") // ver aquí casos borde
     .filter((phrase) => phrase.match(/\S/))
-    .map((phrase) => `${phrase.trim()}.`)
-    .join("\n\n")
+    .map((phrase) => `${phrase}.`)
+    .join("\n")
 );
 
 // Pregunta 8
