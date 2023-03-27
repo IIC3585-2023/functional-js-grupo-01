@@ -5,7 +5,7 @@ This web page lets you transform a text with one or multliple filters. It was ma
 There is available:
 - [Web page](https://iic3585-2023.github.io/functional-js-grupo-01/)
 - [Filter funcions code](./src/lib/filters.ts)
-- [Presentation](./slides)
+- [Presentation](./slides/programacion-funcional.pdf)
 
 ## Contributors
 | Name | Email | Github |
