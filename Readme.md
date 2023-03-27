@@ -4,7 +4,7 @@ This web page lets you transform a text with one or multliple filters. It was ma
 
 There is available:
 - [Web page](https://iic3585-2023.github.io/functional-js-grupo-01/)
-- [Source code](./src)
+- [Filter funcions code](./src/lib/filters.ts)
 - [Presentation](./slides)
 
 ## Contributors
