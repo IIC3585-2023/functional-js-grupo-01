@@ -76,33 +76,19 @@ export const filterParagraphs = transformFn(
       .join("\n\n")
 );
 
-// Pregunta 7
-const findLongestNString = (strings: string[]): number =>
-  strings.filter((str) => /^\n+$/.test(str))
-    .reduce((max, str) => Math.max(max, str.length), 0);
-
-
 /** Cada frase debe aparecer en párrafo aparte */
-export const convertToParagraphs = transformFn({}, (text) => {
-  // Separo el texto en frases
-  const phrases = text.split(/\.(\s+)/);
-  const sexo = findLongestNString(phrases) - 1;
-  const paragraphs = phrases.reduce((acc, phrase, index) => {
-    if (phrase.match(/\S/)) {
-      // Si la frase no es solo espacios en blanco
-      if (index > 0) {
-        // Si el último elemento del array es un string vacío, es porque la frase anterior terminaba con un punto
-        acc.push(`\n${phrase.trim()}.`);
-      } else {
-        acc.push(`${phrase.trim()}.`);
-      }
-    } else {
-      acc.push("\n".repeat(sexo));
-    }
-    return acc;
-  }, [] as string[]);
-  return paragraphs.join("");
-});
+export const convertToParagraphs = transformFn({}, (text) =>
+  text
+    .split("\n")
+    .map((line) =>
+      line
+        .split(".")
+        .map((p) => p.trimStart())
+        .join(".\n")
+        .trimEnd()
+    )
+    .join("\n")
+);
 
 // Pregunta 8
 /** Solo las primeras ​n​ frases de cada párrafo */
