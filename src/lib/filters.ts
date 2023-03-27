@@ -14,7 +14,7 @@ export const indentationToPhrase = transformFn(
 // Pregunta 2
 /** Cada párrafo debe estar separado por ​n​ líneas (después de un punto aparte) */
 export const lineBreaks = transformFn({ n: { name: "Line breaks", default: 2 } }, (text, { n }) =>
-  text.replaceAll(/(\n+)/g, "$1" + "\n".repeat(n))
+  text.replaceAll(/(\n+)/g, "\n".repeat(n))
 );
 
 // Pregunta 3
