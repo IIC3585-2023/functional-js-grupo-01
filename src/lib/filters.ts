@@ -15,11 +15,7 @@ export const addIndentationToPhrase = transformFn(
 /** Cada párrafo debe estar separado por ​n​ líneas (después de un punto aparte) */
 export const addLineBreaks = transformFn(
   { n: { name: "Line breaks", default: 2 } },
-  (text, { n }) =>
-    text
-      .split("\n\n")
-      .map((paragraph) => paragraph.split("\n").join(" ").trim())
-      .join("\n".repeat(n + 1))
+  (text, { n }) => text.split("\n\n").join("\n".repeat(n + 2))
 );
 
 // Pregunta 3
