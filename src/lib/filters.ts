@@ -6,16 +6,15 @@ const transformFn = <P extends Params, Fn extends FilterFn<P>>(p: P, fn: Fn) => 
 
 // Pregunta 1
 /** Cada frase debe comenzar con ​n​ espacios en blanco (después de un punto seguido) */
-export const addIndentationToPhrase = transformFn(
+export const indentationToPhrase = transformFn(
   { n: { name: "Indentation", default: 2 } },
   (text, { n }) => text.replace(/(\. )/g, "." + " ".repeat(n))
 );
 
 // Pregunta 2
 /** Cada párrafo debe estar separado por ​n​ líneas (después de un punto aparte) */
-export const addLineBreaks = transformFn(
-  { n: { name: "Line breaks", default: 2 } },
-  (text, { n }) => text.replaceAll(/(\n+)/g, "$1" + "\n".repeat(n))
+export const lineBreaks = transformFn({ n: { name: "Line breaks", default: 2 } }, (text, { n }) =>
+  text.replaceAll(/(\n+)/g, "$1" + "\n".repeat(n))
 );
 
 // Pregunta 3
@@ -50,7 +49,7 @@ export const limitWidth = transformFn({ n: { name: "Width", default: 80 } }, (te
 
 // Pregunta 4
 /** Cada párrafo debe tener ​n​ espacios de sangría */
-export const addParagraphIndentation = transformFn(
+export const paragraphIndentation = transformFn(
   { n: { name: "Indentation", default: 4 } },
   (text, { n }) => text.replace(/^(?!\s*$)/gm, " ".repeat(n))
 );
@@ -100,10 +99,10 @@ export const takeFirstSentences = transformFn(
 
 export type FilterName = keyof typeof filters;
 export const filters = {
-  addIndentationToPhrase,
-  addLineBreaks,
+  indentationToPhrase,
+  lineBreaks,
   limitWidth,
-  addParagraphIndentation,
+  paragraphIndentation,
   filterParagraphs,
   convertToParagraphs,
   takeFirstSentences,

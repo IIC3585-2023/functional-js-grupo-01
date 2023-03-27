@@ -1,6 +1,6 @@
 import "./style.css";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import exampleText from "../example/input.txt?raw";
 import { transform } from "../lib";
@@ -12,6 +12,15 @@ import { useLocalStorage } from "../lib/useLocalStorage";
 export default function App(): JSX.Element {
   const [text, setText] = useLocalStorage("fs-text", exampleText);
   const [options, setOptions] = useLocalStorage<TransformationConfig[]>("fp-options", []);
+
+  const transformedText = useMemo(() => {
+    try {
+      return transform(text, options);
+    } catch (e) {
+      setText(exampleText);
+      setOptions([]);
+    }
+  }, [text, options]);
 
   return (
     <>
@@ -28,7 +37,7 @@ export default function App(): JSX.Element {
       </div>
       <div className="grid grid-cols-2 flex-grow text-sm sm:text-base">
         <textarea className="p-2" value={text} onChange={(e) => setText(e.target.value)} />
-        <textarea className="p-2" value={transform(text, options)} disabled />
+        <textarea className="p-2" value={transformedText} disabled />
       </div>
     </>
   );
