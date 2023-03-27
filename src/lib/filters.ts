@@ -6,20 +6,15 @@ const transformFn = <P extends Params, Fn extends FilterFn<P>>(p: P, fn: Fn) => 
 
 // Pregunta 1
 /** Cada frase debe comenzar con ​n​ espacios en blanco (después de un punto seguido) */
-export const addIndentationToPhrase = transformFn(
+export const indentationToPhrase = transformFn(
   { n: { name: "Indentation", default: 2 } },
-  (text, { n }) => text.replace(/(?<=\. )/g, " ".repeat(n))
+  (text, { n }) => text.replace(/(\. )/g, "." + " ".repeat(n))
 );
 
 // Pregunta 2
 /** Cada párrafo debe estar separado por ​n​ líneas (después de un punto aparte) */
-export const addLineBreaks = transformFn(
-  { n: { name: "Line breaks", default: 2 } },
-  (text, { n }) =>
-    text
-      .split("\n\n")
-      .map((paragraph) => paragraph.split("\n").join(" ").trim())
-      .join("\n".repeat(n + 1))
+export const lineBreaks = transformFn({ n: { name: "Line breaks", default: 2 } }, (text, { n }) =>
+  text.replaceAll(/(\n+)/g, "\n".repeat(n))
 );
 
 // Pregunta 3
@@ -54,7 +49,7 @@ export const limitWidth = transformFn({ n: { name: "Width", default: 80 } }, (te
 
 // Pregunta 4
 /** Cada párrafo debe tener ​n​ espacios de sangría */
-export const addParagraphIndentation = transformFn(
+export const paragraphIndentation = transformFn(
   { n: { name: "Indentation", default: 4 } },
   (text, { n }) => text.replace(/^(?!\s*$)/gm, " ".repeat(n))
 );
@@ -78,19 +73,18 @@ export const filterParagraphs = transformFn(
 
 // Pregunta 7
 /** Cada frase debe aparecer en párrafo aparte */
-export const convertToParagraphs = transformFn({}, (text) => {
-  // Separo el texto en frases
-  const phrases = text.split(/\.(\s+)/);
-  const paragraphs = phrases.reduce((acc, phrase) => {
-    // Si la frase no es solo espacios en blanco
-    if (phrase.match(/\S/)) {
-      // Si el último elemento del array es un string vacío, es porque la frase anterior terminaba con un punto
-      acc.push(`\n\n${phrase.trim()}.`);
-    }
-    return acc;
-  }, [] as string[]);
-  return paragraphs.join("");
-});
+export const convertToParagraphs = transformFn({}, (text) =>
+  text
+    .split("\n")
+    .map((line) =>
+      line
+        .split(".")
+        .map((p) => p.trimStart())
+        .join(".\n\n")
+        .trimEnd()
+    )
+    .join("\n")
+);
 
 // Pregunta 8
 /** Solo las primeras ​n​ frases de cada párrafo */
@@ -105,10 +99,10 @@ export const takeFirstSentences = transformFn(
 
 export type FilterName = keyof typeof filters;
 export const filters = {
-  addIndentationToPhrase,
-  addLineBreaks,
+  indentationToPhrase,
+  lineBreaks,
   limitWidth,
-  addParagraphIndentation,
+  paragraphIndentation,
   filterParagraphs,
   convertToParagraphs,
   takeFirstSentences,

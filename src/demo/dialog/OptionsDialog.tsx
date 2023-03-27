@@ -2,22 +2,32 @@ import { useState, Dispatch, SetStateAction } from "react";
 import { FilterName, filters, Params, TransformationConfig } from "../../lib/filters";
 
 interface OptionsDialogProps {
+  reset: () => void;
   options: TransformationConfig[];
   setOptions: Dispatch<SetStateAction<TransformationConfig[]>>;
 }
 
-export default function OptionsDialog({ options, setOptions }: OptionsDialogProps): JSX.Element {
+export default function OptionsDialog({ options, setOptions, reset }: OptionsDialogProps): JSX.Element {
   const [showModal, setShowModal] = useState(false);
 
   return (
     <>
-      <button
-        className="bg-black text-white active:bg-black-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-        type="button"
-        onClick={() => setShowModal(true)}
-      >
-        Set Options
-      </button>
+      <div className="flex gap-2">
+        <button
+          className="bg-black text-white active:bg-black-600 font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none"
+          type="button"
+          onClick={() => setShowModal(true)}
+        >
+          Set options {options.length > 0 ? `(${options.length})` : "(empty)"}
+        </button>
+        <button
+          className="bg-black text-white active:bg-black-600 font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none"
+          type="button"
+          onClick={reset}
+        >
+          Reset
+        </button>
+      </div>
       {showModal ? (
         <>
           <div className="justify-center items-center flex overflow-x-hidden fixed inset-0 z-50 outline-none focus:outline-none p-2">
