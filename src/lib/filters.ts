@@ -80,7 +80,7 @@ export const convertToParagraphs = transformFn({}, (text) =>
       line
         .split(".")
         .map((p) => p.trimStart())
-        .join(".\n")
+        .join(".\n\n")
         .trimEnd()
     )
     .join("\n")
